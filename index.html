@@ -1,821 +1,142 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prova CARGOO · estude o código linha por linha</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Barlow:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --asfalto:#3A3A3A;
-  --asfalto-escuro:#262626;
-  --asfalto-mais:#1c1c1c;
-  --grafite:#707070;
-  --branco:#FFFFFF;
-  --amarelo:#FFC400;
-  --vermelho:#FF1E1E;
-  --verde:#1fbf6b;
-  --cinza-claro:#F4F4F4;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARGOO · Nenhum caminhão volta vazio</title>
 
-*{margin:0;padding:0;box-sizing:border-box}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-body{
-  font-family:'Barlow',sans-serif;
-  background:var(--asfalto-escuro);
-  color:var(--branco);
-  line-height:1.6;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:28px 16px 60px;
-}
-
-.app{width:100%;max-width:780px}
-
-/* ---------- cabeçalho ---------- */
-.topo{text-align:center;margin-bottom:26px}
-.logo{
-  font-family:'Michroma',sans-serif;
-  text-transform:uppercase;
-  font-size:30px;
-  letter-spacing:1px;
-}
-.logo span{color:var(--vermelho)}
-.subtitulo{
-  color:var(--amarelo);
-  font-weight:700;
-  letter-spacing:2px;
-  font-size:12px;
-  text-transform:uppercase;
-  margin-top:6px;
-}
-
-/* faixa de estrada tracejada (assinatura visual da marca) */
-.faixa-estrada{
-  height:6px;
-  width:200px;
-  margin:16px auto 0;
-  background:repeating-linear-gradient(90deg,
-    var(--amarelo) 0 26px,
-    transparent 26px 50px);
-  background-size:50px 100%;
-  animation:andar 1.2s linear infinite;
-}
-@keyframes andar{from{background-position:0 0}to{background-position:50px 0}}
-
-/* ---------- cartão genérico ---------- */
-.cartao{
-  background:var(--asfalto);
-  border-radius:12px;
-  padding:26px 24px;
-  border:1px solid #4a4a4a;
-}
-
-/* ---------- tela inicial ---------- */
-.intro h1{
-  font-family:'Michroma',sans-serif;
-  text-transform:uppercase;
-  font-size:21px;
-  line-height:1.3;
-  margin-bottom:10px;
-}
-.intro p{color:#d8d8d8;margin-bottom:22px;font-size:16px}
-
-.label-secao{
-  color:var(--amarelo);
-  font-weight:700;
-  letter-spacing:2px;
-  font-size:12px;
-  text-transform:uppercase;
-  margin-bottom:12px;
-}
-
-.opcoes-secao{display:grid;gap:12px;margin-bottom:26px}
-.opcao-secao{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  background:var(--asfalto-escuro);
-  border:2px solid #4a4a4a;
-  border-radius:10px;
-  padding:16px 18px;
-  cursor:pointer;
-  text-align:left;
-  font-family:'Barlow',sans-serif;
-  font-size:16px;
-  font-weight:600;
-  color:var(--branco);
-  transition:border-color .15s, transform .15s;
-}
-.opcao-secao:hover{border-color:var(--amarelo);transform:translateY(-2px)}
-.opcao-secao .qtd{
-  font-size:13px;
-  color:var(--grafite);
-  font-weight:700;
-  background:#1c1c1c;
-  padding:4px 10px;
-  border-radius:20px;
-  white-space:nowrap;
-}
-.opcao-secao .tag{
-  font-family:'JetBrains Mono',monospace;
-  color:var(--amarelo);
-  font-weight:600;
-}
-
-/* ---------- botões ---------- */
-.botao{
-  display:inline-block;
-  width:100%;
-  padding:15px 24px;
-  border-radius:8px;
-  font-family:'Barlow',sans-serif;
-  font-weight:700;
-  font-size:16px;
-  cursor:pointer;
-  border:2px solid transparent;
-  transition:transform .15s, opacity .15s;
-}
-.botao:hover{transform:translateY(-2px)}
-.botao:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.botao-vermelho{background:var(--vermelho);color:#fff}
-.botao-amarelo{background:var(--amarelo);color:var(--asfalto-escuro)}
-.botao-contorno{background:transparent;color:#fff;border-color:#5a5a5a}
-
-/* ---------- barra de progresso ---------- */
-.barra-topo{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-.barra-topo .secao-atual{color:var(--amarelo)}
-.barra-topo .placar{color:#d8d8d8}
-.trilho{
-  height:6px;
-  width:100%;
-  background:#1c1c1c;
-  border-radius:6px;
-  overflow:hidden;
-  margin-bottom:22px;
-}
-.trilho-preenchido{
-  height:100%;
-  width:0%;
-  background:repeating-linear-gradient(90deg,
-    var(--amarelo) 0 14px, #d9a700 14px 28px);
-  transition:width .35s ease;
-}
-
-/* ---------- pergunta ---------- */
-.enunciado{font-size:18px;font-weight:600;margin-bottom:16px}
-.codigo{
-  font-family:'JetBrains Mono',monospace;
-  font-size:14px;
-  background:var(--asfalto-mais);
-  border-left:4px solid var(--amarelo);
-  padding:14px 16px;
-  border-radius:0 8px 8px 0;
-  margin-bottom:20px;
-  overflow-x:auto;
-  white-space:pre;
-  color:#e6e6e6;
-}
-.codigo .arquivo{
-  display:block;
-  font-size:11px;
-  color:var(--grafite);
-  margin-bottom:8px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-.alternativas{display:grid;gap:10px;margin-bottom:8px}
-.alt{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-  background:var(--asfalto-escuro);
-  border:2px solid #4a4a4a;
-  border-radius:10px;
-  padding:14px 16px;
-  cursor:pointer;
-  text-align:left;
-  font-family:'Barlow',sans-serif;
-  font-size:16px;
-  color:var(--branco);
-  transition:border-color .12s, background .12s;
-}
-.alt:hover:not(:disabled){border-color:var(--amarelo)}
-.alt:disabled{cursor:default}
-.alt .letra{
-  flex:none;
-  width:26px;height:26px;
-  display:grid;place-items:center;
-  border-radius:6px;
-  background:#1c1c1c;
-  font-weight:700;
-  font-size:14px;
-  color:var(--amarelo);
-}
-.alt.certa{border-color:var(--verde);background:rgba(31,191,107,.14)}
-.alt.certa .letra{background:var(--verde);color:#fff}
-.alt.errada{border-color:var(--vermelho);background:rgba(255,30,30,.12)}
-.alt.errada .letra{background:var(--vermelho);color:#fff}
-
-/* ---------- feedback ---------- */
-.feedback{
-  margin-top:18px;
-  border-radius:10px;
-  padding:16px 18px;
-  font-size:15px;
-  display:none;
-}
-.feedback.mostrar{display:block}
-.feedback.ok{background:rgba(31,191,107,.12);border:1px solid var(--verde)}
-.feedback.nao{background:rgba(255,30,30,.10);border:1px solid var(--vermelho)}
-.feedback b{display:block;margin-bottom:4px;font-size:15px}
-.feedback.ok b{color:var(--verde)}
-.feedback.nao b{color:var(--vermelho)}
-.feedback span{color:#e0e0e0}
-
-.rodape-pergunta{margin-top:22px}
-
-/* ---------- resultado ---------- */
-.resultado{text-align:center}
-.resultado .nota{
-  font-family:'Michroma',sans-serif;
-  font-size:52px;
-  color:var(--amarelo);
-  margin:8px 0 2px;
-}
-.resultado .de{color:var(--grafite);font-weight:700;margin-bottom:14px}
-.resultado .frase{font-size:18px;font-weight:600;margin-bottom:6px}
-.resultado .detalhe{color:#d8d8d8;margin-bottom:24px}
-.botoes-fim{display:grid;gap:12px}
-
-.esconder{display:none}
-
-footer{
-  text-align:center;
-  margin-top:26px;
-  color:var(--grafite);
-  font-size:12px;
-  letter-spacing:1px;
-}
-
-@media (prefers-reduced-motion: reduce){
-  .faixa-estrada{animation:none}
-  *{transition:none!important}
-}
-@media (max-width:520px){
-  .logo{font-size:24px}
-  .resultado .nota{font-size:42px}
-  .codigo{font-size:12.5px}
-}
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="app">
 
-  <div class="topo">
-    <div class="logo">CARG<span>OO</span></div>
-    <div class="subtitulo">prova do código · estude linha por linha</div>
+  <header>
+    <div class="header-interno">
+      <div class="logo">CARG<span>OO</span></div>
+      <button class="btn-menu" onclick="alternarMenu()">☰</button>
+      <nav id="menu">
+        <a href="#problema">O problema</a>
+        <a href="#como">Como funciona</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#contato">Participar</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CONECTA · TRANSPORTA · ENTREGA RESULTADOS</p>
+    <h1>Nenhum caminhão<br>volta <span class="destaque">vazio</span>.</h1>
     <div class="faixa-estrada"></div>
-  </div>
+    <p>
+      O CARGOO conecta empresas que precisam enviar cargas a caminhoneiros
+      que já estão voltando para casa. A volta deixa de ser prejuízo e vira
+      frete cheio: mais renda para o motorista e custo menor para quem contrata.
+    </p>
+    <a href="#contato" class="botao botao-vermelho">Sou empresa</a>
+    <a href="#contato" class="botao botao-contorno">Sou caminhoneiro</a>
+  </section>
 
-  <!-- TELA INICIAL -->
-  <div class="cartao intro" id="tela-inicio">
-    <h1>Antes da apresentação,<br>fixe o que cada linha faz.</h1>
-    <p>O professor pode apontar qualquer linha e perguntar o que ela faz. Escolha por onde começar — cada pergunta mostra a linha real do código e explica a resposta na hora.</p>
-
-    <div class="label-secao">Escolha a parte</div>
-    <div class="opcoes-secao" id="opcoes-secao"></div>
-  </div>
-
-  <!-- TELA DE PERGUNTA -->
-  <div class="cartao esconder" id="tela-pergunta">
-    <div class="barra-topo">
-      <span class="secao-atual" id="secao-atual">CSS</span>
-      <span class="placar" id="placar">Acertos: 0</span>
+  <section class="problema" id="problema">
+    <div class="container">
+      <p class="rotulo">O problema</p>
+      <h2>O frete de retorno</h2>
+      <p>
+        Hoje, plataformas como <strong>Fretebras</strong>, <strong>Buscafrete</strong>
+        e <strong>TransportaAi</strong> funcionam como murais de frete: elas listam
+        cargas, mas não resolvem o trecho ocioso da volta. O caminhão retorna vazio,
+        esse custo entra no preço do frete e as melhores cargas seguem concentradas
+        nas grandes transportadoras. É exatamente nessa lacuna que o CARGOO atua.
+      </p>
     </div>
-    <div class="trilho"><div class="trilho-preenchido" id="trilho"></div></div>
+  </section>
 
-    <div class="enunciado" id="enunciado"></div>
-    <div class="codigo" id="codigo"></div>
-    <div class="alternativas" id="alternativas"></div>
-
-    <div class="feedback" id="feedback">
-      <b id="feedback-titulo"></b>
-      <span id="feedback-texto"></span>
+  <section id="como">
+    <div class="container">
+      <p class="rotulo">Como funciona</p>
+      <h2>Simples para os dois lados</h2>
+      <div class="abas">
+        <button class="aba-botao ativa" id="botao-empresa"
+                onclick="abrirAba('empresa')">Para empresas</button>
+        <button class="aba-botao" id="botao-caminhoneiro"
+                onclick="abrirAba('caminhoneiro')">Para caminhoneiros</button>
+      </div>
+      <div class="aba-conteudo mostrar" id="aba-empresa">
+        <ul class="passos">
+          <li><b>1.</b> Publique sua carga, a rota e a data.</li>
+          <li><b>2.</b> Receba caminhoneiros que já estão naquele trajeto.</li>
+          <li><b>3.</b> Pague menos aproveitando a volta e acompanhe a entrega.</li>
+        </ul>
+      </div>
+      <div class="aba-conteudo" id="aba-caminhoneiro">
+        <ul class="passos">
+          <li><b>1.</b> Cadastre seu veículo e suas rotas habituais.</li>
+          <li><b>2.</b> Receba ofertas de carga para a volta, sem agenciador.</li>
+          <li><b>3.</b> Volte com o baú cheio e ganhe mais no mesmo trajeto.</li>
+        </ul>
+      </div>
     </div>
+  </section>
 
-    <div class="rodape-pergunta">
-      <button class="botao botao-amarelo esconder" id="btn-proxima">Próxima pergunta</button>
+  <section class="diferenciais" id="diferenciais">
+    <div class="container">
+      <p class="rotulo">Por que o CARGOO</p>
+      <h2 style="color:#fff">Diferente dos murais de frete</h2>
+      <div class="cartoes">
+        <div class="cartao">
+          <h3>Resolve a volta</h3>
+          <p>Não é só uma lista de cargas: o foco é eliminar o trecho vazio.</p>
+        </div>
+        <div class="cartao">
+          <h3>Acesso justo</h3>
+          <p>Boas cargas para o autônomo, sem ficarem presas às grandes.</p>
+        </div>
+        <div class="cartao">
+          <h3>Menos custo</h3>
+          <p>Menos quilômetro ocioso significa frete mais barato para todos.</p>
+        </div>
+        <div class="cartao">
+          <h3>Acompanhamento</h3>
+          <p>Status da carga e da rota em tempo real, do embarque à entrega.</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- TELA DE RESULTADO -->
-  <div class="cartao resultado esconder" id="tela-fim">
-    <div class="label-secao" id="fim-secao">Resultado</div>
-    <div class="nota" id="fim-nota">0</div>
-    <div class="de" id="fim-de">de 0</div>
-    <div class="frase" id="fim-frase"></div>
-    <div class="detalhe" id="fim-detalhe"></div>
-    <div class="botoes-fim">
-      <button class="botao botao-vermelho" id="btn-refazer">Refazer esta parte</button>
-      <button class="botao botao-contorno" id="btn-voltar">Escolher outra parte</button>
+  <section class="contato" id="contato">
+    <div class="container">
+      <p class="rotulo">Participar</p>
+      <h2>Faça parte do lançamento</h2>
+      <p>Cadastre-se e avisamos você assim que o CARGOO estiver no ar.</p>
+      <div class="formulario">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" placeholder="Seu nome">
+
+        <label for="tipo">Você é...</label>
+        <select id="tipo">
+          <option>Empresa</option>
+          <option>Caminhoneiro</option>
+        </select>
+
+        <label for="whats">WhatsApp</label>
+        <input id="whats" type="text" placeholder="(44) 90000-0000">
+
+        <button class="botao botao-vermelho" onclick="enviarWhatsApp()">
+          Quero participar
+        </button>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <footer>CONECTA · TRANSPORTA · ENTREGA RESULTADOS</footer>
-</div>
+  <footer>
+    <div class="logo">CARG<span style="color:var(--vermelho)">OO</span></div>
+    <p class="slogan">CONECTA · TRANSPORTA · ENTREGA RESULTADOS</p>
+    <p>Maringá · PR — © 2026 CARGOO</p>
+  </footer>
 
-<script>
-/* ============================================================
-   BANCO DE PERGUNTAS
-   cada pergunta: { cat, enunciado, codigo, arquivo, alts, correta, exp }
-   cat: 'html' | 'css' | 'js'
-   correta: indice (0 a 3) da alternativa certa
-============================================================ */
-const perguntas = [
-
-/* ---------------- HTML ---------------- */
-{cat:'html', arquivo:'index.html',
- enunciado:'O que esta linha garante na página?',
- codigo:'<meta charset="UTF-8">',
- alts:[
-  'Permite usar acentos (ç, ã, é) sem virar caractere estranho',
-  'Define a cor de fundo da página',
-  'Importa a fonte do Google',
-  'Faz a página rolar suavemente'],
- correta:0,
- exp:'O charset UTF-8 define a codificação dos caracteres. Sem ele, acentos e o "ç" podem aparecer quebrados.'},
-
-{cat:'html', arquivo:'index.html',
- enunciado:'Para que serve a meta viewport?',
- codigo:'<meta name="viewport"\n      content="width=device-width, initial-scale=1.0">',
- alts:[
-  'Aumenta a velocidade de carregamento',
-  'Faz o site se ajustar à tela do celular (responsivo)',
-  'Bloqueia o zoom no computador',
-  'Define o título da aba'],
- correta:1,
- exp:'A viewport faz a largura acompanhar o aparelho, deixando o layout responsivo no celular.'},
-
-{cat:'html', arquivo:'index.html',
- enunciado:'Por que o <script> fica no FIM do <body>?',
- codigo:'<script src="script.js"><\/script>',
- alts:[
-  'Para o JS rodar antes de tudo',
-  'Por exigência do navegador',
-  'Para o HTML já existir quando o JS rodar',
-  'Para esconder o código do usuário'],
- correta:2,
- exp:'Colocando no fim, todos os elementos já foram criados — então getElementById encontra cada um sem erro.'},
-
-{cat:'html', arquivo:'index.html',
- enunciado:'O que o onclick faz neste botão?',
- codigo:'<button class="btn-menu"\n        onclick="alternarMenu()">☰</button>',
- alts:[
-  'Chama a função alternarMenu() do JS ao clicar',
-  'Cria uma nova função chamada alternarMenu',
-  'Abre o WhatsApp',
-  'Recarrega a página'],
- correta:0,
- exp:'onclick liga o clique a uma função já definida no script.js. Aqui ela abre/fecha o menu.'},
-
-{cat:'html', arquivo:'index.html',
- enunciado:'Por que o logo separa "OO" dentro de um <span>?',
- codigo:'<div class="logo">CARG<span>OO</span></div>',
- alts:[
-  'Para o "OO" ficar maior',
-  'Para poder colorir só o "OO" de vermelho pelo CSS',
-  'Para virar um link',
-  'Porque <div> não aceita texto'],
- correta:1,
- exp:'O <span> isola o "OO" para que o CSS (.logo span{color:...}) pinte só essa parte de vermelho.'},
-
-{cat:'html', arquivo:'index.html',
- enunciado:'Segundo o comentário, por que NÃO foi usada a tag <form>?',
- codigo:'<div class="formulario"> ... </div>',
- alts:[
-  'Porque <form> não funciona no celular',
-  'De propósito: o JS monta a mensagem e abre o WhatsApp',
-  'Porque o professor proibiu',
-  'Para o site ficar mais rápido'],
- correta:1,
- exp:'A escolha é intencional: em vez de enviar um formulário, a ideia é montar a mensagem e abrir o WhatsApp via JS.'},
-
-/* ---------------- CSS ---------------- */
-{cat:'css', arquivo:'style.css',
- enunciado:'Qual a vantagem de guardar as cores em :root?',
- codigo:':root{\n  --vermelho:#FF1E1E;\n  --amarelo:#FFC400;\n}',
- alts:[
-  'Deixa a página mais rápida',
-  'Permite trocar a cor em 1 lugar e mudar o site todo',
-  'Esconde as cores do usuário',
-  'É obrigatório em todo CSS'],
- correta:1,
- exp:'As variáveis ficam centralizadas no :root. Mudou ali, mudou em todos os lugares que usam var(--cor).'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que box-sizing: border-box faz?',
- codigo:'*{\n  box-sizing:border-box;\n}',
- alts:[
-  'Adiciona uma borda a todos os elementos',
-  'Faz borda e padding contarem DENTRO da largura definida',
-  'Remove todas as bordas',
-  'Cria caixas quadradas'],
- correta:1,
- exp:'Com border-box, padding e borda ficam incluídos na largura — o elemento não "estoura" o tamanho definido.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'Para que serve este bloco logo no início?',
- codigo:'*{\n  margin:0;\n  padding:0;\n}',
- alts:[
-  'É um reset: zera margens e espaçamentos padrão do navegador',
-  'Deixa tudo invisível',
-  'Centraliza a página',
-  'Aplica a fonte Barlow'],
- correta:0,
- exp:'É o "reset": cada navegador tem margens padrão diferentes, e zerar tudo dá um ponto de partida igual.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que position: sticky + top: 0 fazem no header?',
- codigo:'header{\n  position:sticky;\n  top:0;\n}',
- alts:[
-  'Escondem o header',
-  'Fazem o header ficar fixo no topo ao rolar a página',
-  'Colocam o header no rodapé',
-  'Deixam o header transparente'],
- correta:1,
- exp:'sticky com top:0 "gruda" o header no topo quando a página rola, mantendo o menu sempre acessível.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'Por que o header tem z-index: 100?',
- codigo:'header{\n  z-index:100;\n}',
- alts:[
-  'Para aumentar o tamanho do header',
-  'Para ele ficar ACIMA dos outros elementos (na frente)',
-  'Para mudar a ordem do menu',
-  'Para deixar 100px de margem'],
- correta:1,
- exp:'z-index controla a sobreposição: valor alto faz o header ficar na frente do conteúdo ao rolar.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que justify-content: space-between faz aqui?',
- codigo:'.header-interno{\n  display:flex;\n  justify-content:space-between;\n}',
- alts:[
-  'Empilha logo e menu um sobre o outro',
-  'Empurra logo e menu para pontas opostas, com espaço entre eles',
-  'Centraliza tudo',
-  'Deixa tudo do lado esquerdo'],
- correta:1,
- exp:'Em um flex container, space-between joga o primeiro item para a esquerda e o último para a direita.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que esta regra faz com o logo?',
- codigo:'.logo span{\n  color:var(--vermelho);\n}',
- alts:[
-  'Pinta o logo inteiro de vermelho',
-  'Pinta apenas o trecho dentro do <span> (o "OO") de vermelho',
-  'Aumenta a fonte do logo',
-  'Adiciona uma sombra'],
- correta:1,
- exp:'O seletor .logo span atinge só o que está no <span> — por isso só o "OO" fica vermelho.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'Qual o efeito de text-decoration: none nos links?',
- codigo:'nav a{\n  text-decoration:none;\n}',
- alts:[
-  'Remove o sublinhado padrão dos links',
-  'Deixa os links em negrito',
-  'Esconde os links',
-  'Muda a cor dos links'],
- correta:0,
- exp:'Links vêm sublinhados por padrão; none remove esse sublinhado para um visual mais limpo.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que transition: transform .15s faz no botão?',
- codigo:'.botao{\n  transition:transform .15s;\n}',
- alts:[
-  'Move o botão para o lado',
-  'Anima (suaviza) a mudança de transform em 0,15s',
-  'Gira o botão',
-  'Esconde o botão por 0,15s'],
- correta:1,
- exp:'transition deixa a mudança gradual em vez de instantânea — aqui, qualquer alteração no transform leva 0,15s.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que acontece ao passar o mouse no botão?',
- codigo:'.botao:hover{\n  transform:translateY(-2px);\n}',
- alts:[
-  'O botão some',
-  'O botão sobe 2px (efeito de "levantar")',
-  'O botão desce 2px',
-  'O botão fica vermelho'],
- correta:1,
- exp:'translateY(-2px) move o botão 2px para cima; combinado ao transition, vira aquele efeito sutil de levantar.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que esta grade faz com os cartões de diferenciais?',
- codigo:'.cartoes{\n  display:grid;\n  grid-template-columns:\n    repeat(auto-fit, minmax(220px, 1fr));\n}',
- alts:[
-  'Sempre coloca 4 cartões por linha',
-  'Encaixa quantos cartões couberem (mín. 220px), adaptando à tela',
-  'Empilha os cartões sempre em coluna',
-  'Esconde os cartões pequenos'],
- correta:1,
- exp:'auto-fit + minmax(220px,1fr) deixa a grade responsiva: cada cartão tem no mínimo 220px e o número por linha muda conforme a largura.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'Como o CSS controla qual aba aparece?',
- codigo:'.aba-conteudo{ display:none; }\n.aba-conteudo.mostrar{ display:block; }',
- alts:[
-  'Todas as abas ficam sempre visíveis',
-  'Tudo começa escondido; só quem tem a classe "mostrar" aparece',
-  'A aba aparece ao passar o mouse',
-  'O CSS não controla isso'],
- correta:1,
- exp:'Por padrão tudo é display:none. O JS adiciona a classe "mostrar" na aba escolhida, e aí ela vira display:block.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que define a @media (max-width: 720px)?',
- codigo:'@media (max-width:720px){\n  .hero h1{ font-size:32px; }\n}',
- alts:[
-  'Regras que valem só em telas de até 720px (celular)',
-  'Regras que valem só em telas grandes',
-  'O tamanho fixo da página',
-  'A largura do header'],
- correta:0,
- exp:'A media query aplica esses ajustes apenas quando a tela tem no máximo 720px — o "modo celular".'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'Por que o botão-menu começa com display: none?',
- codigo:'.btn-menu{ display:none; }\n/* e dentro do @media: */\n.btn-menu{ display:block; }',
- alts:[
-  'Para o botão nunca aparecer',
-  'Para o hambúrguer aparecer só no celular (via media query)',
-  'Para esconder o menu inteiro',
-  'É um erro no código'],
- correta:1,
- exp:'No computador o menu já cabe, então o hambúrguer fica escondido; a media query o reativa só na tela pequena.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que esta dupla faz com o .container?',
- codigo:'.container{\n  max-width:1100px;\n  margin:0 auto;\n}',
- alts:[
-  'Estica o conteúdo até a borda da tela',
-  'Limita a largura a 1100px e centraliza na horizontal',
-  'Alinha o conteúdo à esquerda',
-  'Deixa o conteúdo invisível'],
- correta:1,
- exp:'max-width segura a largura em 1100px; margin:0 auto divide a sobra igualmente nas laterais, centralizando.'},
-
-{cat:'css', arquivo:'style.css',
- enunciado:'O que esta animação faz na faixa da estrada?',
- codigo:'.faixa-estrada{\n  animation:andar 1.2s linear infinite;\n}',
- alts:[
-  'Pisca a faixa',
-  'Faz a faixa "andar" em loop infinito, simulando movimento',
-  'Esconde a faixa após 1,2s',
-  'Aumenta a faixa'],
- correta:1,
- exp:'infinite repete sem parar e linear mantém ritmo constante — a faixa tracejada parece deslizar, como o asfalto.'},
-
-/* ---------------- JS ---------------- */
-{cat:'js', arquivo:'script.js',
- enunciado:'O que document.getElementById("menu") retorna?',
- codigo:'document.getElementById("menu")',
- alts:[
-  'Cria um elemento novo chamado menu',
-  'Pega (referencia) o elemento que tem id="menu"',
-  'Apaga o menu',
-  'Lista todos os menus da página'],
- correta:1,
- exp:'getElementById busca na página o elemento com aquele id e devolve uma referência para você manipular.'},
-
-{cat:'js', arquivo:'script.js',
- enunciado:'O que classList.toggle("aberto") faz?',
- codigo:'function alternarMenu(){\n  document.getElementById("menu")\n    .classList.toggle("aberto");\n}',
- alts:[
-  'Sempre adiciona a classe "aberto"',
-  'Liga/desliga a classe: tira se existe, põe se não existe',
-  'Remove todas as classes',
-  'Renomeia a classe'],
- correta:1,
- exp:'toggle alterna: se a classe "aberto" está lá ele remove, se não está ele adiciona. Por isso o mesmo botão abre e fecha o menu.'},
-
-{cat:'js', arquivo:'script.js',
- enunciado:'Para que serve o parâmetro "aba" nesta função?',
- codigo:'function abrirAba(aba){\n  ...\n}',
- alts:[
-  'Guarda qual aba deve ser aberta ("empresa" ou "caminhoneiro")',
-  'É o nome do arquivo',
-  'É a cor da aba',
-  'Não tem utilidade'],
- correta:0,
- exp:'O HTML chama abrirAba("empresa") ou abrirAba("caminhoneiro"); esse texto chega em "aba" e decide o que mostrar.'},
-
-{cat:'js', arquivo:'script.js',
- enunciado:'O que estas linhas fazem ANTES de mostrar a aba escolhida?',
- codigo:'conteudoEmpresa.classList.remove("mostrar");\nconteudoCaminhoneiro.classList.remove("mostrar");',
- alts:[
-  'Apagam o conteúdo das abas',
-  'Escondem as duas abas para garantir que só uma fique visível',
-  'Mostram as duas abas ao mesmo tempo',
-  'Trocam a cor das abas'],
- correta:1,
- exp:'Primeiro o código "zera" tudo (remove "mostrar" das duas), e só depois reativa a aba escolhida — evita duas visíveis ao mesmo tempo.'},
-
-{cat:'js', arquivo:'script.js',
- enunciado:'O que classList.add("ativa") faz no botão da aba?',
- codigo:'botaoEmpresa.classList.add("ativa");',
- alts:[
-  'Desabilita o botão',
-  'Adiciona a classe "ativa", que pelo CSS deixa o botão vermelho',
-  'Remove o botão',
-  'Cria um novo botão'],
- correta:1,
- exp:'add coloca a classe "ativa"; o CSS .aba-botao.ativa pinta esse botão de vermelho, indicando a aba selecionada.'},
-
-{cat:'js', arquivo:'script.js',
- enunciado:'Qual a diferença do "===" usado aqui?',
- codigo:'if (aba === "empresa") {\n  ...\n}',
- alts:[
-  'Atribui o valor "empresa" a aba',
-  'Compara valor E tipo (igualdade estrita), sem converter',
-  'Soma os dois lados',
-  'É o mesmo que um "=" simples'],
- correta:1,
- exp:'=== é a comparação estrita: confere se o valor e o tipo são iguais. Um "=" sozinho seria atribuição, não comparação.'},
-
-];
-
-/* ============================================================
-   ESTADO E LÓGICA DA PROVA
-============================================================ */
-const nomesSecao = {
-  html:'HTML · estrutura',
-  css:'CSS · visual',
-  js:'JS · interações',
-  tudo:'Tudo · prova completa'
-};
-
-let fila = [];
-let indice = 0;
-let acertos = 0;
-let secaoAtual = 'tudo';
-let respondida = false;
-
-const $ = id => document.getElementById(id);
-
-function montarMenuSecoes(){
-  const ordem = ['css','js','html','tudo'];
-  const cont = $('opcoes-secao');
-  cont.innerHTML = '';
-  ordem.forEach(cat=>{
-    const qtd = cat==='tudo' ? perguntas.length
-                             : perguntas.filter(p=>p.cat===cat).length;
-    const b = document.createElement('button');
-    b.className = 'opcao-secao';
-    const nome = cat==='tudo' ? 'Prova completa' : cat.toUpperCase();
-    b.innerHTML = `<span><span class="tag">${nome}</span> — ${rotuloCurto(cat)}</span>`
-                + `<span class="qtd">${qtd} ${qtd===1?'questão':'questões'}</span>`;
-    b.onclick = ()=>iniciar(cat);
-    cont.appendChild(b);
-  });
-}
-
-function rotuloCurto(cat){
-  return {css:'o visual da página', js:'as interações',
-          html:'a estrutura', tudo:'HTML + CSS + JS'}[cat];
-}
-
-function iniciar(cat){
-  secaoAtual = cat;
-  fila = cat==='tudo' ? embaralhar([...perguntas])
-                      : embaralhar(perguntas.filter(p=>p.cat===cat));
-  indice = 0;
-  acertos = 0;
-  trocarTela('tela-pergunta');
-  mostrarPergunta();
-}
-
-function embaralhar(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]] = [arr[j],arr[i]];
-  }
-  return arr;
-}
-
-function mostrarPergunta(){
-  respondida = false;
-  const p = fila[indice];
-
-  $('secao-atual').textContent =
-    `${nomesSecao[p.cat].split(' · ')[0]} · ${indice+1}/${fila.length}`;
-  $('placar').textContent = `Acertos: ${acertos}`;
-  $('trilho').style.width = `${(indice/fila.length)*100}%`;
-
-  $('enunciado').textContent = p.enunciado;
-  $('codigo').innerHTML =
-    `<span class="arquivo">${p.arquivo}</span>${escapar(p.codigo)}`;
-
-  const letras = ['A','B','C','D'];
-  const cont = $('alternativas');
-  cont.innerHTML = '';
-  p.alts.forEach((texto,i)=>{
-    const b = document.createElement('button');
-    b.className = 'alt';
-    b.innerHTML = `<span class="letra">${letras[i]}</span><span>${escapar(texto)}</span>`;
-    b.onclick = ()=>responder(i,b);
-    cont.appendChild(b);
-  });
-
-  $('feedback').className = 'feedback';
-  $('btn-proxima').classList.add('esconder');
-}
-
-function responder(escolha,btn){
-  if(respondida) return;
-  respondida = true;
-  const p = fila[indice];
-  const botoes = $('alternativas').querySelectorAll('.alt');
-  botoes.forEach(b=>b.disabled = true);
-
-  botoes[p.correta].classList.add('certa');
-  const fb = $('feedback');
-  if(escolha === p.correta){
-    acertos++;
-    fb.className = 'feedback ok mostrar';
-    $('feedback-titulo').textContent = '✓ Acertou!';
-  }else{
-    btn.classList.add('errada');
-    fb.className = 'feedback nao mostrar';
-    $('feedback-titulo').textContent = '✗ Não foi essa';
-  }
-  $('feedback-texto').textContent = p.exp;
-  $('placar').textContent = `Acertos: ${acertos}`;
-
-  const btnProx = $('btn-proxima');
-  btnProx.textContent = (indice+1 < fila.length)
-    ? 'Próxima pergunta' : 'Ver resultado';
-  btnProx.classList.remove('esconder');
-}
-
-$('btn-proxima').onclick = ()=>{
-  indice++;
-  if(indice < fila.length){
-    mostrarPergunta();
-  }else{
-    finalizar();
-  }
-};
-
-function finalizar(){
-  $('trilho').style.width = '100%';
-  trocarTela('tela-fim');
-  const total = fila.length;
-  const pct = Math.round((acertos/total)*100);
-
-  $('fim-secao').textContent = nomesSecao[secaoAtual];
-  $('fim-nota').textContent = acertos;
-  $('fim-de').textContent = `de ${total} · ${pct}%`;
-
-  let frase, detalhe;
-  if(pct === 100){ frase='Baú cheio! 🏆'; detalhe='Você sabe esse código linha por linha. Pode apresentar tranquilo.'; }
-  else if(pct >= 80){ frase='Quase lá!'; detalhe='Só revisar as que escaparam e está pronto pra apresentação.'; }
-  else if(pct >= 50){ frase='No caminho.'; detalhe='Vale refazer e prestar atenção nas explicações de cada linha.'; }
-  else { frase='Bora rodar de novo.'; detalhe='Refaça com calma lendo cada explicação — repetição fixa o conteúdo.'; }
-  $('fim-frase').textContent = frase;
-  $('fim-detalhe').textContent = detalhe;
-}
-
-$('btn-refazer').onclick = ()=>iniciar(secaoAtual);
-$('btn-voltar').onclick = ()=>{ montarMenuSecoes(); trocarTela('tela-inicio'); };
-
-function trocarTela(id){
-  ['tela-inicio','tela-pergunta','tela-fim'].forEach(t=>{
-    $(t).classList.toggle('esconder', t!==id);
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function escapar(txt){
-  return txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-montarMenuSecoes();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
